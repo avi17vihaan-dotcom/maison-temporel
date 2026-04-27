@@ -1,0 +1,33 @@
+type ProductId = nat;
+type Product = 
+ record {
+   collection: Collection;
+   description: text;
+   id: ProductId;
+   imageUrl: text;
+   inStock: bool;
+   name: text;
+   price: float64;
+ };
+type Collection = text;
+type CartItem = 
+ record {
+   productId: ProductId;
+   quantity: nat;
+ };
+type Cart = 
+ record {
+   items: vec CartItem;
+   total: float64;
+ };
+service : {
+  addToCart: (productId: ProductId, quantity: nat) -> ();
+  clearCart: () -> ();
+  getAllProducts: () -> (vec Product) query;
+  getCart: () -> (Cart) query;
+  getCollections: () -> (vec Collection) query;
+  getProductById: (id: ProductId) -> (opt Product) query;
+  getProductsByCollection: (collection: Collection) -> (vec Product) query;
+  removeFromCart: (productId: ProductId) -> ();
+  updateQuantity: (productId: ProductId, quantity: nat) -> ();
+}
